@@ -6,7 +6,7 @@ ShopEase is a full-stack e-commerce web application developed as part of the Cod
 
 It provides a simple and interactive platform where users can browse products, explore categories, add products to their cart, place orders, and share ratings and reviews. The application also includes an admin panel for managing products, categories, orders, and reviews.
 
-##**🚀 Features**
+## **🚀 Features**
 
 **🛍️ Product Browsing**
 
@@ -64,7 +64,7 @@ It provides a simple and interactive platform where users can browse products, e
 - SQLite
 - Git & GitHub
 
-##**📂 Project Structure**
+## **📂 Project Structure**
 
 CodeAlpha_Ecommerce/
 │
@@ -101,7 +101,7 @@ CodeAlpha_Ecommerce/
 ├── asgi.py
 └── wsgi.py
 
-##**⚙️ Installation and Setup**
+## **⚙️ Installation and Setup**
 
 1. Clone the Repository
 
@@ -136,7 +136,7 @@ Open the local server URL shown in the terminal, usually:
 
 http://127.0.0.1:8000/
 
-##**🔐 Security**
+## **🔐 Security**
 
 Sensitive files and local development files such as the following should be excluded from the repository:
 
@@ -147,7 +147,7 @@ pycache/
 
 API keys, passwords, and other private credentials should never be committed to GitHub.
 
-##**🎯 Internship Project**
+## **🎯 Internship Project**
 
 Internship: CodeAlpha Full Stack Development Internship
 
@@ -159,7 +159,7 @@ Tagline: An e-commerce platform where you explore products, shop online, and con
 
 ShopEase was developed to demonstrate full-stack web development concepts including product management, shopping cart functionality, order management, customer reviews and ratings, responsive UI design, admin management, and dynamic web functionality.
 
-##**👩‍💻 Developed By**
+## **👩‍💻 Developed By**
 
 **Ranjani Pullati**
 
