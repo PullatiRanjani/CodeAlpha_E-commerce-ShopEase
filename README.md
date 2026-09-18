@@ -1,4 +1,4 @@
-#**ShopEase – E-Commerce Website**
+# **ShopEase – E-Commerce Website**
 
 An application where you explore products, shop online, manage your cart, place orders, and share your reviews.
 
