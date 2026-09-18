@@ -1,0 +1,572 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ product.name }} — ShopEase
+{% endblock %}
+
+{% block content %}
+
+<section class="container detail">
+
+    <div class="detail-image">
+
+        {% if product.image_url %}
+
+            <img
+                src="{{ product.image_url }}"
+                alt="{{ product.name }}"
+            >
+
+        {% else %}
+
+            <div class="placeholder">
+                ✦
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="detail-copy">
+
+        <span class="eyebrow">
+            {{ product.category.name }}
+        </span>
+
+        <h1>
+            {{ product.name }}
+        </h1>
+
+
+        <div
+            class="rating big"
+            id="average-rating"
+        >
+
+            ★ {{ product.rating|floatformat:2 }}
+
+            <span id="review-count">
+
+                {{ product.review_count }}
+
+                customer review{{ product.review_count|pluralize }}
+
+            </span>
+
+        </div>
+
+
+        <div class="detail-price">
+
+            ₹{{ product.price|floatformat:0 }}
+
+            {% if product.old_price %}
+
+                <del>
+                    ₹{{ product.old_price|floatformat:0 }}
+                </del>
+
+            {% endif %}
+
+        </div>
+
+
+        <p>
+            {{ product.description }}
+        </p>
+
+
+        <div class="stock">
+
+            {% if product.stock > 0 %}
+
+                ✓ In stock ·
+                {{ product.stock }}
+                available
+
+            {% else %}
+
+                Out of stock
+
+            {% endif %}
+
+        </div>
+
+
+        {% if product.stock %}
+
+            <a
+                href="{% url 'add_to_cart' product.id %}"
+                class="btn primary wide"
+            >
+
+                Add to Cart
+
+                <span>→</span>
+
+            </a>
+
+        {% else %}
+
+            <button
+                class="btn secondary wide"
+                disabled
+            >
+
+                Out of Stock
+
+            </button>
+
+        {% endif %}
+
+
+        <a
+            href="{% url 'cart' %}"
+            class="btn secondary wide"
+        >
+
+            View Cart
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<section
+    class="container related"
+    id="reviews"
+>
+
+    <div class="section-head">
+
+        <h2>
+            Customer Reviews
+        </h2>
+
+    </div>
+
+
+    {% if user.is_authenticated %}
+
+        <div
+            class="card"
+            style="padding:20px;margin-bottom:20px"
+        >
+
+            <form
+                method="post"
+                action="{% url 'add_review' product.id %}"
+            >
+
+                {% csrf_token %}
+
+
+                <label>
+                    <strong>
+                        Your rating
+                    </strong>
+                </label>
+
+
+                <div
+                    style="margin:8px 0 14px"
+                >
+
+                    <select
+                        name="rating"
+                        required
+                    >
+
+                        <option value="">
+                            Choose stars
+                        </option>
+
+                        <option value="1">
+                            1 ★
+                        </option>
+
+                        <option value="2">
+                            2 ★
+                        </option>
+
+                        <option value="3">
+                            3 ★
+                        </option>
+
+                        <option value="4">
+                            4 ★
+                        </option>
+
+                        <option value="5">
+                            5 ★
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <textarea
+                    name="comment"
+                    maxlength="1000"
+                    placeholder="Write your review..."
+                    style="
+                        width:100%;
+                        min-height:90px;
+                        padding:10px;
+                        box-sizing:border-box;
+                    "
+                >{% if user_review %}{{ user_review.comment }}{% endif %}</textarea>
+
+
+                <button
+                    class="btn primary"
+                    type="submit"
+                    style="margin-top:12px"
+                >
+
+                    {% if user_review %}
+
+                        Update Review
+
+                    {% else %}
+
+                        Submit Review
+
+                    {% endif %}
+
+                </button>
+
+            </form>
+
+        </div>
+
+    {% else %}
+
+        <p>
+
+            Please
+
+            <a
+                href="{% url 'login' %}?next={{ request.path }}"
+            >
+                login
+            </a>
+
+            to review this product.
+
+        </p>
+
+    {% endif %}
+
+
+    <div id="review-list">
+
+        {% for review in reviews %}
+
+            <div
+                class="card review-card"
+                data-review-id="{{ review.id }}"
+                style="
+                    padding:18px;
+                    margin:10px 0
+                "
+            >
+
+                <div>
+
+                    <strong>
+                        {{ review.user.username }}
+                    </strong>
+
+                    <span class="rating">
+
+                        ★ {{ review.rating }}
+
+                    </span>
+
+                </div>
+
+
+                <p>
+
+                    {{ review.comment|default:"No comment." }}
+
+                </p>
+
+
+                <small>
+
+                    {{ review.updated_at|date:"d M Y" }}
+
+                </small>
+
+            </div>
+
+        {% empty %}
+
+            <p id="no-reviews">
+
+                No reviews yet.
+                Be the first customer to review this product.
+
+            </p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+{% if related %}
+
+<section class="container related">
+
+    <div class="section-head">
+
+        <h2>
+            You may also like
+        </h2>
+
+    </div>
+
+
+    <div class="product-grid">
+
+        {% for p in related %}
+
+            <article class="product-card">
+
+                <a
+                    class="product-img"
+                    href="{% url 'product_detail' p.id %}"
+                >
+
+                    {% if p.image_url %}
+
+                        <img
+                            src="{{ p.image_url }}"
+                            alt="{{ p.name }}"
+                        >
+
+                    {% endif %}
+
+                </a>
+
+
+                <div class="product-info">
+
+                    <div class="rating">
+
+                        ★
+                        {{ p.rating|floatformat:2 }}
+
+                    </div>
+
+
+                    <a
+                        class="pname"
+                        href="{% url 'product_detail' p.id %}"
+                    >
+
+                        {{ p.name }}
+
+                    </a>
+
+
+                    <div class="price-row">
+
+                        <strong>
+
+                            ₹{{ p.price|floatformat:0 }}
+
+                        </strong>
+
+
+                        {% if p.stock %}
+
+                            <a
+                                class="add-mini"
+                                href="{% url 'add_to_cart' p.id %}"
+                            >
+                                +
+                            </a>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endif %}
+
+
+<script>
+
+(function () {
+
+    const scheme =
+        location.protocol === "https:"
+            ? "wss"
+            : "ws";
+
+
+    const socket =
+        new WebSocket(
+            `${scheme}://${location.host}/ws/product/{{ product.id }}/reviews/`
+        );
+
+
+    const list =
+        document.getElementById(
+            "review-list"
+        );
+
+
+    const avg =
+        document.getElementById(
+            "average-rating"
+        );
+
+
+    const count =
+        document.getElementById(
+            "review-count"
+        );
+
+
+    socket.onmessage =
+        function (event) {
+
+            const data =
+                JSON.parse(event.data);
+
+
+            if (data.event !== "review") {
+                return;
+            }
+
+
+            avg.firstChild.textContent =
+                `★ ${Number(data.average_rating).toFixed(2)} `;
+
+
+            count.textContent =
+                `${data.review_count} customer review${
+                    data.review_count === 1
+                        ? ""
+                        : "s"
+                }`;
+
+
+            const old =
+                list.querySelector(
+                    `[data-review-id="${data.review_id}"]`
+                );
+
+
+            const html = `
+
+                <div
+                    class="card review-card"
+                    data-review-id="${data.review_id}"
+                    style="
+                        padding:18px;
+                        margin:10px 0
+                    "
+                >
+
+                    <div>
+
+                        <strong>
+                            ${escapeHtml(data.reviewer)}
+                        </strong>
+
+                        <span class="rating">
+                            ★ ${data.rating}
+                        </span>
+
+                    </div>
+
+                    <p>
+                        ${escapeHtml(
+                            data.comment || "No comment."
+                        )}
+                    </p>
+
+                    <small>
+                        ${escapeHtml(
+                            data.created_at
+                        )}
+                    </small>
+
+                </div>
+
+            `;
+
+
+            if (old) {
+
+                old.outerHTML = html;
+
+            } else {
+
+                list.insertAdjacentHTML(
+                    "afterbegin",
+                    html
+                );
+
+            }
+
+
+            const empty =
+                document.getElementById(
+                    "no-reviews"
+                );
+
+
+            if (empty) {
+                empty.remove();
+            }
+
+        };
+
+
+    function escapeHtml(value) {
+
+        return String(value).replace(
+            /[&<>'"]/g,
+            function (character) {
+
+                return {
+
+                    "&": "&amp;",
+                    "<": "&lt;",
+                    ">": "&gt;",
+                    "'": "&#39;",
+                    '"': "&quot;"
+
+                }[character];
+
+            }
+        );
+
+    }
+
+})();
+
+</script>
+
+{% endblock %}

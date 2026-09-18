@@ -1,0 +1,28 @@
+{% extends "admin/base.html" %}
+
+{% block title %}
+ShopEase Administration
+{% endblock %}
+
+{% block branding %}
+
+<h1 id="site-name">
+    <a href="{% url 'admin:index' %}">
+        🛍️ ShopEase Administration
+    </a>
+</h1>
+
+{% endblock %}
+
+{% block nav-global %}
+{% endblock %}
+
+{% block userlinks %}
+
+<a href="{% url 'admin_shop_preview' %}">
+    👀 Preview Shop
+</a>
+
+{{ block.super }}
+
+{% endblock %}

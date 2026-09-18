@@ -1,0 +1,266 @@
+{% extends "base.html" %}
+
+{% block title %}Sign In - ShopEase{% endblock %}
+
+{% block content %}
+
+<section class="auth-page">
+
+    <div class="auth-card">
+
+        <div class="auth-header">
+            <span class="eyebrow">WELCOME BACK</span>
+
+            <h1>Sign In</h1>
+
+            <p>
+                Sign in to your ShopEase account.
+            </p>
+        </div>
+
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <div class="toast {{ message.tags }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+
+        <form method="post" class="auth-form">
+
+            {% csrf_token %}
+
+
+            <div class="form-group">
+
+                <label for="id_email">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    name="email"
+                    id="id_email"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="id_password">
+                    Password
+                </label>
+
+
+                <div class="password-wrapper">
+
+                    <input
+                        type="password"
+                        name="password"
+                        id="id_password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="togglePassword()"
+                        aria-label="Show password"
+                    >
+                        👁️
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn primary wide auth-button"
+            >
+                Sign In
+            </button>
+
+        </form>
+
+
+        <div class="auth-footer">
+
+            <p>
+                Don't have an account?
+
+                <a href="{% url 'register' %}">
+                    Create an account
+                </a>
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<style>
+
+.auth-page {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 20px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 430px;
+    background: white;
+    border-radius: 18px;
+    padding: 35px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.auth-header h1 {
+    margin: 8px 0;
+}
+
+.auth-header p {
+    color: #777;
+    margin: 0;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 600;
+}
+
+.form-group input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px 14px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: #6d28d9;
+}
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    padding-right: 48px;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 7px;
+}
+
+.password-toggle:hover {
+    opacity: 0.7;
+}
+
+.auth-button {
+    margin-top: 5px;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 25px;
+    color: #777;
+}
+
+.auth-footer a {
+    color: #6d28d9;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+</style>
+
+
+<script>
+
+function togglePassword() {
+
+    const passwordInput =
+        document.getElementById("id_password");
+
+    const toggleButton =
+        document.querySelector(".password-toggle");
+
+
+    if (passwordInput.type === "password") {
+
+        passwordInput.type = "text";
+
+        toggleButton.textContent = "🙈";
+
+        toggleButton.setAttribute(
+            "aria-label",
+            "Hide password"
+        );
+
+    } else {
+
+        passwordInput.type = "password";
+
+        toggleButton.textContent = "👁️";
+
+        toggleButton.setAttribute(
+            "aria-label",
+            "Show password"
+        );
+    }
+}
+
+</script>
+
+{% endblock %}
