@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}My Orders - ShopEase{% endblock %}
+
+{% block content %}
+
+<section class="container page">
+
+    <div class="page-title">
+        <span class="eyebrow">ACCOUNT</span>
+        <h1>My Orders</h1>
+        <p>Track your orders and view your purchase history.</p>
+    </div>
+
+    {% if orders %}
+
+        <div class="orders-list">
+
+            {% for order in orders %}
+
+            <div class="order-card">
+
+                <div class="order-header">
+
+                    <div>
+                        <span class="order-label">ORDER ID</span>
+                        <h3>#{{ order.order_number }}</h3>
+                    </div>
+
+                    <div class="order-status">
+                        <span class="status-badge status-{{ order.status|lower }}">
+                            {{ order.status }}
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="order-info">
+
+                    <div>
+                        <span>Order Date</span>
+                        <strong>{{ order.created_at|date:"d M Y, h:i A" }}</strong>
+                    </div>
+
+                    <div>
+                        <span>Total Amount</span>
+                        <strong>₹{{ order.total }}</strong>
+                    </div>
+
+                    <div>
+                        <span>Items</span>
+                        <strong>{{ order.items.count }}</strong>
+                    </div>
+
+                </div>
+
+                <div class="order-products">
+
+                    {% for item in order.items.all %}
+
+                    <div class="order-product">
+
+                        {% if item.product.image_url %}
+                            <img
+                                src="{{ item.product.image_url }}"
+                                alt="{{ item.product.name }}"
+                            >
+                        {% endif %}
+
+                        <div class="order-product-details">
+                            <h4>{{ item.product.name }}</h4>
+                            <p>Quantity: {{ item.quantity }}</p>
+                            <p>Price: ₹{{ item.price }}</p>
+                        </div>
+
+                        <div class="order-item-total">
+                            ₹{{ item.line_total }}
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+
+            <div class="empty-icon">🛍️</div>
+
+            <h2>No orders yet</h2>
+
+            <p>
+                You haven't placed any orders yet.
+                Start shopping and your orders will appear here.
+            </p>
+
+            <a href="{% url 'home' %}" class="btn btn-primary">
+                Start Shopping
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,159 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>{% block title %}ShopEase{% endblock %}</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+<header class="nav-wrap">
+<nav class="nav container">
+
+<a class="brand" href="{% url 'home' %}">
+    <span>✦</span> ShopEase
+</a>
+
+<div class="nav-links">
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'home' %}#categories">Categories</a>
+    <a href="{% url 'orders' %}">My Orders</a>
+</div>
+
+<form class="search" action="{% url 'home' %}" method="get">
+    <input
+        name="q"
+        value="{{ query|default:'' }}"
+        placeholder="Search products..."
+    >
+    <button>⌕</button>
+</form>
+
+<div class="nav-actions">
+
+{% if user.is_authenticated %}
+
+<span class="hello">
+    Hi, {{ user.first_name }}
+</span>
+
+<a href="{% url 'logout' %}" class="login-link">
+    Logout
+</a>
+
+{% else %}
+
+<a href="{% url 'login' %}" class="login-link">
+    Login
+</a>
+
+{% endif %}
+
+<a class="cart-pill" href="{% url 'cart' %}">
+    🛒 <span>Cart</span>
+    {% if request.session.cart %}
+        <b>{{ request.session.cart|length }}</b>
+    {% endif %}
+</a>
+
+</div>
+
+</nav>
+</header>
+
+
+{% if messages %}
+
+<div class="messages container">
+
+{% for message in messages %}
+
+<div class="toast {{ message.tags }}">
+    {{ message }}
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endif %}
+
+
+<main>
+
+{% block content %}
+{% endblock %}
+
+</main>
+
+
+<footer>
+
+<div class="container footer-grid">
+
+<div>
+
+<a class="brand" href="{% url 'home' %}">
+    <span>✦</span> ShopEase
+</a>
+
+<p>
+    Thoughtfully curated products, delivered simply.
+</p>
+
+</div>
+
+
+<div>
+
+<strong>Shop</strong>
+
+<a href="{% url 'home' %}">
+    All Products
+</a>
+
+<a href="{% url 'home' %}#categories">
+    Categories
+</a>
+
+</div>
+
+
+<div>
+
+<strong>Account</strong>
+
+<a href="{% url 'orders' %}">
+    My Orders
+</a>
+
+<a href="{% url 'cart' %}">
+    Shopping Cart
+</a>
+
+</div>
+
+</div>
+
+
+<div class="copyright">
+    © 2026 ShopEase · CodeAlpha Full Stack Project
+</div>
+
+</footer>
+
+
+<script src="{% static 'js/app.js' %}"></script>
+
+</body>
+</html>
