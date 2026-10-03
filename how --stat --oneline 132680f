@@ -1,0 +1,67 @@
+[33mcommit 132680f12801955fa866270bcece8a6ceef5007c[m
+Author: ranjani <ranjanipullati@gmail.com>
+Date:   Sat Oct 3 22:32:11 2026 +0530
+
+    Add gunicorn for Render deployment
+
+ README.md                                          |   32 [32m+[m
+ db.sqlite3                                         |  Bin [31m0[m -> [32m233472[m bytes
+ manage.py                                          |   10 [32m+[m
+ requirements.txt                                   |    4 [32m+[m
+ shopease/__init__.py                               |    0
+ shopease/__pycache__/__init__.cpython-314.pyc      |  Bin [31m0[m -> [32m182[m bytes
+ shopease/__pycache__/asgi.cpython-314.pyc          |  Bin [31m0[m -> [32m770[m bytes
+ shopease/__pycache__/middleware.cpython-314.pyc    |  Bin [31m0[m -> [32m1600[m bytes
+ shopease/__pycache__/settings.cpython-314.pyc      |  Bin [31m0[m -> [32m2301[m bytes
+ shopease/__pycache__/urls.cpython-314.pyc          |  Bin [31m0[m -> [32m1878[m bytes
+ shopease/__pycache__/wsgi.cpython-314.pyc          |  Bin [31m0[m -> [32m434[m bytes
+ shopease/asgi.py                                   |   41 [32m+[m
+ shopease/middleware.py                             |   36 [32m+[m
+ shopease/settings.py                               |  145 [32m+++[m
+ shopease/urls.py                                   |  109 [32m++[m
+ shopease/wsgi.py                                   |    4 [32m+[m
+ static/css/style.css                               |    1 [32m+[m
+ static/js/app.js                                   |   83 [32m++[m
+ store/__init__.py                                  |    0
+ store/__pycache__/__init__.cpython-314.pyc         |  Bin [31m0[m -> [32m179[m bytes
+ store/__pycache__/admin.cpython-314.pyc            |  Bin [31m0[m -> [32m3663[m bytes
+ store/__pycache__/apps.cpython-314.pyc             |  Bin [31m0[m -> [32m538[m bytes
+ store/__pycache__/consumers.cpython-314.pyc        |  Bin [31m0[m -> [32m3783[m bytes
+ store/__pycache__/models.cpython-314.pyc           |  Bin [31m0[m -> [32m10662[m bytes
+ store/__pycache__/realtime.cpython-314.pyc         |  Bin [31m0[m -> [32m2716[m bytes
+ store/__pycache__/routing.cpython-314.pyc          |  Bin [31m0[m -> [32m554[m bytes
+ store/__pycache__/views.cpython-314.pyc            |  Bin [31m0[m -> [32m22515[m bytes
+ store/admin.py                                     |  207 [32m++++[m
+ store/apps.py                                      |    4 [32m+[m
+ store/consumers.py                                 |   86 [32m++[m
+ store/management/__init__.py                       |    0
+ .../__pycache__/__init__.cpython-314.pyc           |  Bin [31m0[m -> [32m190[m bytes
+ store/management/commands/__init__.py              |    0
+ store/management/commands/seed_demo.py             |    0
+ store/migrations/0001_initial.py                   |   66 [32m++[m
+ ...ategory_options_alter_order_options_and_more.py |  100 [32m++[m
+ store/migrations/0003_cartitem.py                  |   31 [32m+[m
+ .../0004_product_gender_product_product_type.py    |   23 [32m+[m
+ store/migrations/__init__.py                       |    0
+ .../__pycache__/0001_initial.cpython-314.pyc       |  Bin [31m0[m -> [32m4234[m bytes
+ ...ns_alter_order_options_and_more.cpython-314.pyc |  Bin [31m0[m -> [32m4657[m bytes
+ .../__pycache__/0003_cartitem.cpython-314.pyc      |  Bin [31m0[m -> [32m2103[m bytes
+ ...uct_gender_product_product_type.cpython-314.pyc |  Bin [31m0[m -> [32m1273[m bytes
+ .../__pycache__/__init__.cpython-314.pyc           |  Bin [31m0[m -> [32m190[m bytes
+ store/models.py                                    |  334 [32m++++++[m
+ store/realtime.py                                  |   85 [32m++[m
+ store/routing.py                                   |   21 [32m+[m
+ store/views.py                                     | 1195 [32m++++++++++++++++++++[m
+ templates/admin/base_site.html                     |   28 [32m+[m
+ templates/admin/index.html                         |   54 [32m+[m
+ templates/admin/live_orders.html                   |  685 [32m+++++++++++[m
+ templates/admin/shop_preview.html                  |  217 [32m++++[m
+ templates/base.html                                |  159 [32m+++[m
+ templates/cart.html                                |  662 [32m+++++++++++[m
+ templates/checkout.html                            |    2 [32m+[m
+ templates/home.html                                |    8 [32m+[m
+ templates/login.html                               |  266 [32m+++++[m
+ templates/orders.html                              |  115 [32m++[m
+ templates/product_detail.html                      |  572 [32m++++++++++[m
+ templates/register.html                            |   69 [32m++[m
+ 60 files changed, 5454 insertions(+)
