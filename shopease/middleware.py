@@ -8,29 +8,16 @@ class AdminHostMiddleware:
 
     def __call__(self, request):
 
-        host = request.get_host().split(":")[0]
         path = request.path
 
-        # Allow static files and favicon on both local hosts
+        # Static files and favicon
         if path.startswith("/static/") or path == "/favicon.ico":
             return self.get_response(request)
 
-        # Admin pages only through localhost
+        # Admin pages are allowed
+        # Django admin login will handle authentication.
         if path.startswith("/admin/"):
+            return self.get_response(request)
 
-            if host != "localhost":
-                return HttpResponse(
-                    "Admin access is available only through localhost.",
-                    status=403
-                )
-
-        # Customer website only through 127.0.0.1
-        else:
-
-            if host != "127.0.0.1":
-                return HttpResponse(
-                    "Customer website is available only through 127.0.0.1.",
-                    status=403
-                )
-
+        # Customer website is allowed on localhost and Render
         return self.get_response(request)
