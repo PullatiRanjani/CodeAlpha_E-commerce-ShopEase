@@ -36,6 +36,8 @@ MIDDLEWARE = [
 
     "django.middleware.security.SecurityMiddleware",
 
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+
     "shopease.middleware.AdminHostMiddleware",
 
     "django.contrib.sessions.middleware.SessionMiddleware",
